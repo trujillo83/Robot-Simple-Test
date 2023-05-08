@@ -8,3 +8,8 @@ First create python virtual environment
 Then install requirements
 
 	pip install -r requirements.txt
+
+Robot test can be run with following command
+
+	robot --outputdir logs/ get_menu.robot
+	
