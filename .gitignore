@@ -1,0 +1,9 @@
+# Som common ignore patterns for Robot tests
+robot/logs
+*.html
+*.log
+*.xml
+
+# Python related ignores
+__pycache__
+robot/.env
