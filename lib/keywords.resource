@@ -4,7 +4,7 @@ Library             Collections
 Library             DateTime
 Library             String
 Library             SeleniumLibrary
-Library             lib/custom_library.py
+Library             custom_library.py
 
 *** Keywords ***
 Initialize Browser For Test
