@@ -1,18 +1,21 @@
 *** Settings ***
 Documentation       keywords used in get_menu.robot suite
-
+Library             Collections
+Library             DateTime
+Library             String
+Library             SeleniumLibrary
+Library             lib/custom_library.py
 
 *** Keywords ***
+Initialize Browser For Test
+    Get Current Date As Datetime Format
+    Open Web Page
+    Maximize Browser Window
+    Check Cookies Box
+
 Open Web Page
     [Documentation]    open webpage where test will run
     Open Browser    ${HOMEPAGE}    ${BROWSER}
-
-Get Text Using Keyword
-    [Documentation]    get the text in webpage using an specific element path
-    [Arguments]    ${element_path}
-    ${xpath}=    Set Variable    ${element_path}
-    ${text}=    Get Text    xpath=(${xpath})
-    RETURN    ${text}
 
 Get Current Date As Datetime Format
     [Documentation]    get the current date in computer where running test
@@ -29,10 +32,10 @@ Search In Webpage For Elements In File
     FOR    ${element_in_list}    IN    @{restaurants_to_look_for}
         Click Element    //*[@id="navi"]/a[1]
         Sleep    1
-        Input Text    //body/div[1]/div[2]/div[2]/div[1]/form[1]/input[1]    ${element_in_list}
+        Input Text    //div[@class='form-container']//input[@data-lounaat-element='query']    ${element_in_list}
         Click Element    //button[contains(text(),'Hae')]
         Sleep    1
-        ${whole_day_menu}=    Get Text Using Keyword    //body/div[5]/div[1]/div[2]/div[1]/div[2]
+        ${whole_day_menu}=    Get Text    //div[@class='item-body']
         Append To List    ${MENUS_LIST}    ${whole_day_menu}
     END
     Set Test Variable    ${MENUS_LIST}
@@ -43,3 +46,15 @@ Create File With Found Menus
     [Arguments]    ${file_name_to_write}
     Log Many    @{MENUS_LIST}
     Write To File    ${file_name_to_write}    ${MENUS_LIST}    ${RESTAURANTS_LIST}    ${DATETIME}
+
+Check Cookies Box
+    [Documentation]    Check if pop-up cookies dialog is shown and close
+    ${cookie_dialog}    Run Keyword And Return Status
+    ...    Wait Until Page Contains Element
+    ...    //div[@class='qc-cmp2-summary-buttons']
+    ...    timeout=5
+    IF    ${cookie_dialog}
+        Click Element    //*[@id="qc-cmp2-ui"]/div[2]/div/button[3]
+    ELSE
+        Log To Console    No open cookies dialog
+    END
