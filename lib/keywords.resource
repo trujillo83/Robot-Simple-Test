@@ -33,6 +33,7 @@ Search In Webpage For Elements In File
         Wait Until Page Contains Element    //*[@id="navi"]/a[1]    timeout=5s
         Click Element    //*[@id="navi"]/a[1]
         #Sleep    1
+        Wait Until Page Contains Element    //div[@class='form-container']//input[@data-lounaat-element='query']    timeout=5s
         Input Text    //div[@class='form-container']//input[@data-lounaat-element='query']    ${element_in_list}
         Wait Until Page Contains Element    //button[contains(text(),'Hae')]    timeout=5s
         Click Element    //button[contains(text(),'Hae')]
