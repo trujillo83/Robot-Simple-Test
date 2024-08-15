@@ -30,15 +30,11 @@ Search In Webpage For Elements In File
     ${restaurants_to_look_for}=    Read From File    ${file_name}
     ${list_range}=    Get Length    ${restaurants_to_look_for}
     FOR    ${element_in_list}    IN    @{restaurants_to_look_for}
-        Wait Until Page Contains Element    //*[@id="navi"]/a[1]    timeout=5s
         Click Element    //*[@id="navi"]/a[1]
-        #Sleep    1
-        Wait Until Page Contains Element    //div[@class='form-container']//input[@data-lounaat-element='query']    timeout=5s
+        Sleep    3
         Input Text    //div[@class='form-container']//input[@data-lounaat-element='query']    ${element_in_list}
-        Wait Until Page Contains Element    //button[contains(text(),'Hae')]    timeout=5s
         Click Element    //button[contains(text(),'Hae')]
-        #Sleep    1
-        Wait Until Page Contains Element    //div[@class='item-body']    timeout=5s
+        Sleep    3
         ${whole_day_menu}=    Get Text    //div[@class='item-body']
         Append To List    ${MENUS_LIST}    ${whole_day_menu}
     END
